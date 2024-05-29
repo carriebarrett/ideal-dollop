@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import WorkIcon from '@mui/icons-material/Work';
 import Shift from '../models/Shift';
+import dayjs from 'dayjs';
 
 const ShiftCard = (shift: Shift) => {
   return (
@@ -20,7 +21,7 @@ const ShiftCard = (shift: Shift) => {
         <WorkIcon />
       </IconButton>
       <ListItemText
-        primary={shift.title}
+        primary={`${shift.title} - ${dayjs(shift.date).format('MM/DD/YYYY')}`}
         secondary={
           <Fragment>
             <Typography

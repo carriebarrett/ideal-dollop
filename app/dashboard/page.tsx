@@ -5,6 +5,7 @@ import List from "@mui/material/List";
 import Row from "../../src/components/Row";
 import Column from "../../src/components/Column";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import DateCalendarServerRequest from "../../src/components/Calendar";
 
 export default function Page() {
   return (
@@ -26,6 +27,7 @@ export default function Page() {
               <ShiftCard
                 key={shift.id}
                 id={shift.id}
+                date={shift.date}
                 title={shift.title}
                 student={shift.student}
                 description={shift.description}
@@ -38,7 +40,7 @@ export default function Page() {
           style={{}}
         >
           <h1>Calendar</h1>
-          <CalendarMonthIcon />
+          <DateCalendarServerRequest />
         </Column>
       </Row>
       <Row

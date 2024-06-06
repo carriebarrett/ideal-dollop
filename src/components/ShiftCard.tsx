@@ -21,7 +21,7 @@ const ShiftCard = (shift: Shift) => {
         <WorkIcon />
       </IconButton>
       <ListItemText
-        primary={`${shift.title} - ${dayjs(shift.date).format('MM/DD/YYYY')}`}
+        primary={`${shift.title} - ${dayjs(shift.date).format('MMM. D, YYYY  - h:mm a')}`}
         secondary={
           <Fragment>
             <Typography

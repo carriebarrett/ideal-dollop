@@ -1,0 +1,37 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200
+    }
+  ],
+  "shifts": [
+    {
+      "id": 1,
+      "date": "2022-04-25T05:55:00.000Z",
+      "title": "AP Calculus Test Review",
+      "student": "Sadie Abraham",
+      "description": "I need help studying for my AP Calculus test this Friday"
+    },
+    {
+      "id": 2,
+      "date": "2022-04-26T14:35:00.000Z",
+      "title": "AP Statistics Exam Review",
+      "student": "Steve Jobs",
+      "description": "I need help studying for my stats test"
+    },
+    {
+      "id": 3,
+      "date": "2022-04-28T12:15:00.000Z",
+      "title": "Algebra 2 Test Corrections",
+      "student": "Jane Doe",
+      "description": "I can do test corrections to improve my grade"
+    }
+  ]
+}

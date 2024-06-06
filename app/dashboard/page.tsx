@@ -2,7 +2,6 @@
 
 import React from "react";
 import ShiftCard from "../../src/components/ShiftCard";
-import { SampleShift, SampleShiftList } from "../../src/samples/SampleShift";
 import List from "@mui/material/List";
 import Row from "../../src/components/Row";
 import Column from "../../src/components/Column";

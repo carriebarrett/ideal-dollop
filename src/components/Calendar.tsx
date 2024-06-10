@@ -39,7 +39,7 @@ const initialValue = dayjs('2022-04-17');
 
 function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: number[] }) {
   const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
-
+  console.log(highlightedDays);
   const isSelected =
     !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0;
 
@@ -47,12 +47,13 @@ function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: number[] 
     <Badge
       key={props.day.toString()}
       overlap="circular"
-      badgeContent={isSelected ? <WorkIcon sx={{ fontSize: 18 }}/> : undefined}
+      badgeContent={isSelected ? <WorkIcon sx={{ fontSize: 18 }} /> : undefined}
     >
       <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
     </Badge>
   );
 }
+
 
 export default function DateCalendarServerRequest() {
   const requestAbortController = React.useRef<AbortController | null>(null);
@@ -96,6 +97,8 @@ export default function DateCalendarServerRequest() {
     fetchHighlightedDays(date);
   };
 
+  console.log(highlightedDays);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
@@ -109,6 +112,38 @@ export default function DateCalendarServerRequest() {
         slotProps={{
           day: {
             highlightedDays,
+          } as any,
+        }}
+      />
+    </LocalizationProvider>
+  );
+}
+
+export function MyCalendar(days: number[]) {
+  const requestAbortController = React.useRef<AbortController | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleMonthChange = (date: Dayjs) => {
+    if (requestAbortController.current) {
+      // make sure that you are aborting useless requests
+      // because it is possible to switch between months pretty quickly
+      requestAbortController.current.abort();
+    }
+  };
+  console.log(days);
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DateCalendar
+        defaultValue={initialValue}
+        loading={isLoading}
+        onMonthChange={handleMonthChange}
+        renderLoading={() => <DayCalendarSkeleton />}
+        slots={{
+          day: ServerDay,
+        }}
+        slotProps={{
+          day: {
+            days,
           } as any,
         }}
       />

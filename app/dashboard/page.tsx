@@ -5,7 +5,7 @@ import ShiftCard from "../../src/components/ShiftCard";
 import List from "@mui/material/List";
 import Row from "../../src/components/Row";
 import Column from "../../src/components/Column";
-import DateCalendarServerRequest from "../../src/components/Calendar";
+import DateCalendarServerRequest, { MyCalendar } from "../../src/components/Calendar";
 import { getShifts } from "../../src/models/Shift";
 import Shift from "../../src/models/Shift";
 
@@ -27,6 +27,7 @@ export default function Page() {
   React.useEffect(() => {
     fetchShifts()
   }, []);
+  
   return (
     <Column
       className="col-class"
@@ -60,6 +61,13 @@ export default function Page() {
         >
           <h1>Calendar</h1>
           <DateCalendarServerRequest />
+        </Column>
+        <Column
+          className="col-class"
+          style={{}}
+        >
+          <h1>Calendar</h1>
+          <MyCalendar days={[1, 2, 3]} />
         </Column>
       </Row>
       <Row

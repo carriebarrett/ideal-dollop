@@ -60,13 +60,6 @@ export default function Page() {
           style={{}}
         >
           <h1>Calendar</h1>
-          <DateCalendarServerRequest />
-        </Column>
-        <Column
-          className="col-class"
-          style={{}}
-        >
-          <h1>Calendar</h1>
           <MyCalendar days={[1, 2, 3]} />
         </Column>
       </Row>

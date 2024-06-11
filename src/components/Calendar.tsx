@@ -126,7 +126,7 @@ interface CalendarProps {
 const MyCalendar = (props: CalendarProps) => {
   const requestAbortController = React.useRef<AbortController | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const days = props.days;
+  const highlightedDays = props.days;
   const handleMonthChange = (date: Dayjs) => {
     if (requestAbortController.current) {
       // make sure that you are aborting useless requests
@@ -147,7 +147,7 @@ const MyCalendar = (props: CalendarProps) => {
         }}
         slotProps={{
           day: {
-            days,
+            highlightedDays,
           } as any,
         }}
       />

@@ -58,7 +58,7 @@ function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: number[] 
 export default function DateCalendarServerRequest() {
   const requestAbortController = React.useRef<AbortController | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
+  const [highlightedDays, setHighlightedDays] = React.useState(new Array<number>());
 
   const fetchHighlightedDays = (date: Dayjs) => {
     const controller = new AbortController();
@@ -119,10 +119,14 @@ export default function DateCalendarServerRequest() {
   );
 }
 
-export function MyCalendar(days: number[]) {
+interface CalendarProps {
+  days: number[]
+}
+
+const MyCalendar = (props: CalendarProps) => {
   const requestAbortController = React.useRef<AbortController | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
-
+  const days = props.days;
   const handleMonthChange = (date: Dayjs) => {
     if (requestAbortController.current) {
       // make sure that you are aborting useless requests
@@ -130,7 +134,7 @@ export function MyCalendar(days: number[]) {
       requestAbortController.current.abort();
     }
   };
-  console.log(days);
+  console.log(props.days);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
@@ -150,3 +154,5 @@ export function MyCalendar(days: number[]) {
     </LocalizationProvider>
   );
 }
+
+export { MyCalendar };

@@ -27,7 +27,7 @@ export default function Page() {
   React.useEffect(() => {
     fetchShifts()
   }, []);
-  
+
   return (
     <Column
       className="col-class"

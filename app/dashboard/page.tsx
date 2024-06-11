@@ -8,6 +8,7 @@ import Column from "../../src/components/Column";
 import DateCalendarServerRequest, { MyCalendar } from "../../src/components/Calendar";
 import { getShifts } from "../../src/models/Shift";
 import Shift from "../../src/models/Shift";
+import dayjs, { Dayjs } from 'dayjs';
 
 export default function Page() {
   let initialShifts: Shift[] = [];
@@ -25,7 +26,7 @@ export default function Page() {
       });
   };
   React.useEffect(() => {
-    fetchShifts()
+    fetchShifts();
   }, []);
 
   return (
@@ -60,7 +61,10 @@ export default function Page() {
           style={{}}
         >
           <h1>Calendar</h1>
-          <MyCalendar days={[1, 2, 3]} />
+          <MyCalendar
+            today={dayjs('2022-04-17')}
+            shifts={shifts.slice()}
+          />
         </Column>
       </Row>
       <Row

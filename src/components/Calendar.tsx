@@ -9,6 +9,7 @@ import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import WorkIcon from '@mui/icons-material/Work';
+import Shift from '../models/Shift';
 
 
 /**
@@ -39,7 +40,6 @@ const initialValue = dayjs('2022-04-17');
 
 function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: number[] }) {
   const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
-  console.log(highlightedDays);
   const isSelected =
     !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0;
 
@@ -97,8 +97,6 @@ export default function DateCalendarServerRequest() {
     fetchHighlightedDays(date);
   };
 
-  console.log(highlightedDays);
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
@@ -120,25 +118,42 @@ export default function DateCalendarServerRequest() {
 }
 
 interface CalendarProps {
-  days: number[]
+  today: Dayjs,
+  shifts: Shift[]
 }
 
 const MyCalendar = (props: CalendarProps) => {
   const requestAbortController = React.useRef<AbortController | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const highlightedDays = props.days;
+  const [highlightedDays, setHighlightedDays] = React.useState(new Array<number>());
+  const getHighlightedDays = (date: Dayjs) => {
+    console.log(date);
+    console.log(props.shifts);
+    const tempDays = new Array<number>();
+    for (let shift of props.shifts) {
+      console.log(shift.date);
+      if (date.isSame(shift.date, 'month')) {
+        tempDays.push(shift.date.date());
+      };
+    }
+    console.log(tempDays);
+    setHighlightedDays(tempDays);
+  };
+  React.useEffect(() => {
+    getHighlightedDays(props.today);
+  }, []);
   const handleMonthChange = (date: Dayjs) => {
     if (requestAbortController.current) {
       // make sure that you are aborting useless requests
       // because it is possible to switch between months pretty quickly
       requestAbortController.current.abort();
     }
+    getHighlightedDays(date);
   };
-  console.log(props.days);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
-        defaultValue={initialValue}
+        defaultValue={props.today}
         loading={isLoading}
         onMonthChange={handleMonthChange}
         renderLoading={() => <DayCalendarSkeleton />}

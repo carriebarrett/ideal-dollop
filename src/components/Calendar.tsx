@@ -119,42 +119,41 @@ export default function DateCalendarServerRequest() {
 
 interface CalendarProps {
   today: Dayjs,
-  shifts: Shift[]
+  shifts: Shift[],
+  initialHighlightedDays: number[]
 }
+
+const getHighlightedDays = (date: Dayjs, shifts: Shift[]): number[] => {
+  console.log(date);
+  console.log(shifts);
+  const tempDays = new Array<number>();
+  for (let shift of shifts) {
+    console.log(shift.date);
+    if (date.isSame(shift.date, 'month')) {
+      tempDays.push(shift.date.date());
+    };
+  }
+  console.log(tempDays);
+  return tempDays;
+};
 
 const MyCalendar = (props: CalendarProps) => {
   const requestAbortController = React.useRef<AbortController | null>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [highlightedDays, setHighlightedDays] = React.useState(new Array<number>());
-  const getHighlightedDays = (date: Dayjs) => {
-    console.log(date);
-    console.log(props.shifts);
-    const tempDays = new Array<number>();
-    for (let shift of props.shifts) {
-      console.log(shift.date);
-      if (date.isSame(shift.date, 'month')) {
-        tempDays.push(shift.date.date());
-      };
-    }
-    console.log(tempDays);
-    setHighlightedDays(tempDays);
-  };
-  React.useEffect(() => {
-    getHighlightedDays(props.today);
-  }, []);
+  const [highlightedDays, setHighlightedDays] = React.useState(props.initialHighlightedDays);
+
   const handleMonthChange = (date: Dayjs) => {
     if (requestAbortController.current) {
       // make sure that you are aborting useless requests
       // because it is possible to switch between months pretty quickly
       requestAbortController.current.abort();
     }
-    getHighlightedDays(date);
+    setHighlightedDays(getHighlightedDays(date, props.shifts));
   };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
         defaultValue={props.today}
-        loading={isLoading}
+        loading={false}
         onMonthChange={handleMonthChange}
         renderLoading={() => <DayCalendarSkeleton />}
         slots={{
@@ -170,4 +169,4 @@ const MyCalendar = (props: CalendarProps) => {
   );
 }
 
-export { MyCalendar };
+export { MyCalendar, getHighlightedDays };

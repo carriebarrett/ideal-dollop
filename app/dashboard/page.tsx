@@ -5,7 +5,7 @@ import ShiftCard from "../../src/components/ShiftCard";
 import List from "@mui/material/List";
 import Row from "../../src/components/Row";
 import Column from "../../src/components/Column";
-import DateCalendarServerRequest, { MyCalendar } from "../../src/components/Calendar";
+import DateCalendarServerRequest, { MyCalendar, getHighlightedDays } from "../../src/components/Calendar";
 import { getShifts } from "../../src/models/Shift";
 import Shift from "../../src/models/Shift";
 import dayjs, { Dayjs } from 'dayjs';
@@ -63,7 +63,8 @@ export default function Page() {
           <h1>Calendar</h1>
           <MyCalendar
             today={dayjs('2022-04-17')}
-            shifts={shifts.slice()}
+            shifts={shifts}
+            initialHighlightedDays={getHighlightedDays(dayjs('2022-04-17'), shifts)}
           />
         </Column>
       </Row>

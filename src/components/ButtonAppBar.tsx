@@ -8,7 +8,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 const navItems = [
   { label: 'Dashboard', url: '/dashboard' },
-  { label: 'Settings', url: '/dashboard/settings' }
+  { label: 'Settings', url: '/dashboard/settings' },
+  { label: 'Spatial', url: '/spatial'}
 ]
 
 const ButtonAppBar = () => {
